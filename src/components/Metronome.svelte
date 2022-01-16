@@ -1,10 +1,12 @@
 <script>
 	import BpmInfo from './BpmInfo.svelte';
+	import PlayButton from './PlayButton.svelte';
 	import Slider from './Slider.svelte';
 
 	const initialBpm = 80;
 
 	let bpm = initialBpm;
+	let playing = false;
 </script>
 
 <div class="metronome-container">
@@ -14,6 +16,11 @@
 		max={200}
 		initialValue={initialBpm}
 		onChange={(value) => (bpm = value)}
+	/>
+	<PlayButton
+		{playing}
+		onPause={() => (playing = false)}
+		onPlay={() => (playing = true)}
 	/>
 </div>
 
