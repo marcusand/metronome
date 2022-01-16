@@ -7,8 +7,7 @@
 	export let onPause;
 
 	const handleClick = () => {
-		if (playing) onPause();
-		else onPlay();
+		playing ? onPause() : onPlay();
 	};
 </script>
 
