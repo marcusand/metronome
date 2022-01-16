@@ -25,7 +25,7 @@
 	.button {
 		background: transparent;
 		border: none;
-		color: #7f519d;
+		color: var(--color-beta);
 		cursor: pointer;
 	}
 
@@ -33,10 +33,10 @@
 		-webkit-appearance: none;
 		width: 100%;
 		height: 2px;
-		background: #000;
+		background: var(--color-black);
 		cursor: pointer;
 
-		--thumb-color: #7f519d;
+		--thumb-color: var(--color-beta);
 		--thumb-size: 15px;
 	}
 

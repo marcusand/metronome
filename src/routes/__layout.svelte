@@ -8,6 +8,12 @@
 		src: url('/fonts/objectivity.medium.otf') format('opentype');
 	}
 
+	:global(:root) {
+		--color-alpha: #b4b17c;
+		--color-beta: #7f519d;
+		--color-black: #1f0539;
+	}
+
 	:global(html),
 	:global(body),
 	:global(#svelte),
@@ -25,6 +31,6 @@
 	}
 
 	.main-container {
-		background-color: #b4b17c;
+		background-color: var(--color-alpha);
 	}
 </style>

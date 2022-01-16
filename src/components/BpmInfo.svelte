@@ -7,7 +7,7 @@
 	.container {
 		width: 150px;
 		height: 150px;
-		border: 2px solid black;
+		border: 2px solid var(--color-black);
 		border-radius: 50%;
 		display: flex;
 		flex-direction: column;

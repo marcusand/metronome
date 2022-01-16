@@ -21,15 +21,16 @@
 	.metronome-container {
 		width: 400px;
 		height: 600px;
-		color: #7f519d;
+		color: var(--color-beta);
 
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		padding: 50px;
 
-		border-radius: 50px;
-		background: #b4b17c;
-		box-shadow: 20px 20px 60px #999669, -20px -20px 60px #cfcc8f;
+		border: 2px solid var(--color-black);
+		/* border-radius: 50px; */
+		/* background: #b4b17c; */
+		/* box-shadow: 20px 20px 60px #999669, -20px -20px 60px #cfcc8f; */
 	}
 </style>
