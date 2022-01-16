@@ -19,8 +19,8 @@
 
 <style>
 	.metronome-container {
-		width: 400px;
-		height: 600px;
+		width: 500px;
+		height: 700px;
 		color: var(--color-beta);
 
 		display: flex;
