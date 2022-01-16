@@ -19,13 +19,13 @@
 		mouseDownY = event.clientY;
 		mouseDownAngle = stepAngles[currentStep];
 
-		document.addEventListener('mousemove', handleMouseMove);
-		document.addEventListener('mouseup', handleMouseUp);
+		document.addEventListener('pointermove', handleMouseMove);
+		document.addEventListener('pointerup', handleMouseUp);
 	};
 
 	const handleMouseUp = () => {
-		document.removeEventListener('mouseup', handleMouseUp);
-		document.removeEventListener('mousemove', handleMouseMove);
+		document.removeEventListener('pointerup', handleMouseUp);
+		document.removeEventListener('pointermove', handleMouseMove);
 	};
 
 	const handleMouseMove = (e) => {
@@ -46,7 +46,7 @@
 </script>
 
 <div class="container">
-	<div class="poti-container" on:mousedown={handleMouseDown}>
+	<div class="poti-container" on:pointerdown={handleMouseDown}>
 		<div class="stroke-container" style="transform: rotate({stepAngles[currentStep]}deg)">
 			<div class="stroke" />
 		</div>

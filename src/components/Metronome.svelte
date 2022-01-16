@@ -29,20 +29,26 @@
 		/>
 		<Poti title="sound" stepsCount={3} onChange={() => {}} />
 	</div>
+
+	<div class="volume-container">
+		<Slider min={0} max={100} initialValue={100} onChange={() => {}} />
+		<span>volume</span>
+	</div>
 </div>
 
 <style>
 	.metronome-container {
-		width: 500px;
-		height: 700px;
+		width: 100%;
+		height: 100%;
 		color: var(--color-beta);
 
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 50px;
+		justify-content: center;
+		padding: 1rem;
 
-		border: 2px solid var(--color-black);
+		border: none;
 		/* border-radius: 50px; */
 		/* background: #b4b17c; */
 		/* box-shadow: 20px 20px 60px #999669, -20px -20px 60px #cfcc8f; */
@@ -50,7 +56,27 @@
 		user-select: none;
 	}
 
+	@media only screen and (min-width: 768px) {
+		.metronome-container {
+			width: 500px;
+			height: 700px;
+
+			border: 2px solid var(--color-black);
+		}
+	}
+
 	.button-container {
 		display: flex;
+	}
+
+	.volume-container {
+		width: 50%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.volume-container span {
+		text-align: center;
+		color: var(--color-black);
 	}
 </style>
