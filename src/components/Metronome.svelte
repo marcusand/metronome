@@ -3,6 +3,7 @@
 	import PlayButton from './PlayButton.svelte';
 	import Poti from './Poti.svelte';
 	import Slider from './Slider.svelte';
+	import TapButton from './TapButton.svelte';
 
 	const initialBpm = 80;
 
@@ -12,6 +13,7 @@
 
 <div class="metronome-container">
 	<BpmInfo>{bpm}</BpmInfo>
+	<TapButton />
 	<Slider
 		min={0}
 		max={200}
