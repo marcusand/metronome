@@ -2,7 +2,7 @@
 	export let title = '';
 	export let stepsCount = 4;
 	export let initialStep = 0;
-	export let onChange = (currentStep) => {};
+	export let onChange;
 
 	const minAngle = -130;
 	const maxAngle = 130;
@@ -40,7 +40,7 @@
 
 		if (nearestStep !== currentStep) {
 			currentStep = nearestStep;
-			onChange(currentStep);
+			if (onChange) onChange(currentStep);
 		}
 	};
 </script>
