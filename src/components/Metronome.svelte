@@ -9,15 +9,14 @@
 	import Slider from './Slider.svelte';
 	import TapButton from './TapButton.svelte';
 
-	const initialBpm = 80;
-	const initialSound = 0;
-	const initialTimeSignature = 4;
-
 	let metronome;
 	let playing = false;
-	let bpm = initialBpm;
-	let sound = initialSound;
-	let timeSignature = initialTimeSignature;
+	let bpm = 80;
+	let sound = 0;
+	let timeSignature = 4;
+	let volume = 100;
+	let minBpm = 40;
+	let maxBpm = 220;
 
 	onMount(() => {
 		metronome = createMetronome({
@@ -44,14 +43,11 @@
 
 <div class="container">
 	<RowContainer><BpmInfo>{bpm}</BpmInfo></RowContainer>
-	<RowContainer><TapButton /></RowContainer>
+	<RowContainer
+		><TapButton {minBpm} {maxBpm} onTap={(value) => (bpm = value)} /></RowContainer
+	>
 	<RowContainer width="100%">
-		<Slider
-			min={40}
-			max={220}
-			initialValue={initialBpm}
-			onChange={(value) => (bpm = value)}
-		/>
+		<Slider min={minBpm} max={maxBpm} value={bpm} onChange={(value) => (bpm = value)} />
 	</RowContainer>
 	<RowContainer width="60%">
 		<div class="buttons">
@@ -72,7 +68,7 @@
 				<Poti
 					title="sound"
 					stepsCount={3}
-					initialStep={initialSound}
+					initialStep={sound}
 					onChange={(value) => (sound = value)}
 				/>
 			</div>
@@ -80,7 +76,7 @@
 	</RowContainer>
 	<RowContainer width="60%">
 		<div class="volume-slider">
-			<Slider min={0} max={100} initialValue={100} onChange={() => {}} />
+			<Slider min={0} max={100} value={100} onChange={(value) => (volume = value)} />
 			<span>volume</span>
 		</div>
 	</RowContainer>

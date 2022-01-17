@@ -1,10 +1,8 @@
 <script>
 	export let min;
 	export let max;
-	export let initialValue;
+	export let value;
 	export let onChange;
-
-	let value = initialValue ?? 0;
 
 	$: onChange(value);
 </script>
