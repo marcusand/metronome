@@ -39,6 +39,10 @@
 	$: {
 		if (metronome) metronome.setSampleSet(sound);
 	}
+
+	$: {
+		if (metronome) metronome.setVolume(volume / 100);
+	}
 </script>
 
 <div class="container">

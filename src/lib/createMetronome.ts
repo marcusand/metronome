@@ -12,6 +12,7 @@ export type Metronome = {
 	play: () => void;
 	pause: () => void;
 	setBpm: (value: number) => void;
+	setVolume: (value: number) => void;
 	setSampleSet: (value: number) => void;
 	setTimeSignature: (value: number) => void;
 };
@@ -24,6 +25,7 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 	let samplesLoaded = false;
 	let sampleBuffers: AudioBuffer[];
 	const audioContext: AudioContext = new window.AudioContext();
+	const gainNode = audioContext.createGain();
 	const scheduler = createScheduler({
 		audioContext,
 		bpm: 80,
@@ -55,7 +57,8 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 	const playSample = (buffer: AudioBuffer, when: number): void => {
 		const source = audioContext.createBufferSource();
 		source.buffer = buffer;
-		source.connect(audioContext.destination);
+		source.connect(gainNode);
+		gainNode.connect(audioContext.destination);
 		source.start(when);
 	};
 
@@ -80,6 +83,10 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 		timeSignature = value;
 	};
 
+	const setVolume = (value: number) => {
+		gainNode.gain.value = value;
+	};
+
 	loadSamples();
 
 	return {
@@ -87,6 +94,7 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 		pause,
 		setBpm,
 		setSampleSet,
-		setTimeSignature
+		setTimeSignature,
+		setVolume
 	};
 };
