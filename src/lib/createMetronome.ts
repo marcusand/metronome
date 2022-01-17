@@ -74,7 +74,6 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 
 	const setSampleSet = (value: number) => {
 		sampleSet = value;
-		console.log(sampleSet);
 	};
 
 	const setTimeSignature = (value: number) => {
