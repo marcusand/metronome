@@ -4,6 +4,7 @@
 
 <svelte:head>
 	<title>metronome</title>
+	<meta name="description" content="A free online metronome" />
 </svelte:head>
 
 <div class="container">
