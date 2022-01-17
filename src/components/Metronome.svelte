@@ -1,4 +1,7 @@
 <script>
+	import { createMetronome } from '$lib/createMetronome';
+	import { onMount } from 'svelte';
+
 	import BpmInfo from './BpmInfo.svelte';
 	import PlayButton from './PlayButton.svelte';
 	import Poti from './Poti.svelte';
@@ -7,9 +10,36 @@
 	import TapButton from './TapButton.svelte';
 
 	const initialBpm = 80;
+	const initialSound = 1;
+	const initialTimeSignature = 4;
 
-	let bpm = initialBpm;
+	let metronome;
 	let playing = false;
+	let bpm = initialBpm;
+	let sound = initialSound;
+	let timeSignature = initialTimeSignature;
+
+	onMount(() => {
+		metronome = createMetronome({
+			samples: [['/audio/wood-low.mp3', '/audio/wood-high.mp3']]
+		});
+	});
+
+	$: {
+		if (metronome) metronome.setBpm(bpm);
+	}
+
+	$: {
+		if (metronome) playing ? metronome.play() : metronome.pause();
+	}
+
+	$: {
+		if (metronome) metronome.setTimeSignature(timeSignature);
+	}
+
+	$: {
+		if (metronome) metronome.setSampleSet(sound);
+	}
 </script>
 
 <div class="container">
@@ -17,8 +47,8 @@
 	<RowContainer><TapButton /></RowContainer>
 	<RowContainer width="100%">
 		<Slider
-			min={0}
-			max={200}
+			min={40}
+			max={220}
 			initialValue={initialBpm}
 			onChange={(value) => (bpm = value)}
 		/>
@@ -26,7 +56,12 @@
 	<RowContainer width="60%">
 		<div class="buttons">
 			<div class="poti">
-				<Poti title="count" stepsCount={9} initialStep={3} onChange={() => {}} />
+				<Poti
+					title="time"
+					stepsCount={12}
+					initialStep={timeSignature - 1}
+					onChange={(value) => (timeSignature = value + 1)}
+				/>
 			</div>
 			<PlayButton
 				{playing}
@@ -34,7 +69,7 @@
 				onPlay={() => (playing = true)}
 			/>
 			<div class="poti">
-				<Poti title="sound" stepsCount={3} onChange={() => {}} />
+				<Poti title="sound" stepsCount={3} onChange={(value) => (sound = value)} />
 			</div>
 		</div>
 	</RowContainer>
