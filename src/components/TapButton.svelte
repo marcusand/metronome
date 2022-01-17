@@ -16,8 +16,7 @@
 
 <style>
 	.container {
-		margin: 1rem;
 		cursor: pointer;
-		font-size: 1.5rem;
+		font-size: 2rem;
 	}
 </style>

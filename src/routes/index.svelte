@@ -2,12 +2,16 @@
 	import Metronome from '../components/Metronome.svelte';
 </script>
 
-<div class="page-container">
+<svelte:head>
+	<title>metronome</title>
+</svelte:head>
+
+<div class="container">
 	<Metronome />
 </div>
 
 <style>
-	.page-container {
+	.container {
 		width: 100%;
 		height: 100%;
 		display: flex;

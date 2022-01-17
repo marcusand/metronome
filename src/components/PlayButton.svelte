@@ -19,8 +19,10 @@
 
 <style>
 	.container {
-		width: 60px;
-		height: 60px;
+		--size: 4rem;
+
+		width: var(--size);
+		height: var(--size);
 		border-radius: 50%;
 		border: 2px solid var(--color-black);
 		display: flex;
@@ -30,7 +32,9 @@
 	}
 
 	.icon-container {
-		width: 30px;
-		height: 30px;
+		--size: 2rem;
+
+		width: var(--size);
+		height: var(--size);
 	}
 </style>

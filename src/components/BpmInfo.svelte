@@ -5,8 +5,10 @@
 
 <style>
 	.container {
-		width: 150px;
-		height: 150px;
+		--size: 12rem;
+
+		width: var(--size);
+		height: var(--size);
 		border: 2px solid var(--color-black);
 		border-radius: 50%;
 		display: flex;
@@ -16,10 +18,10 @@
 	}
 
 	.number {
-		font-size: 2.5rem;
+		font-size: 4rem;
 	}
 
 	.label {
-		font-size: 0.7rem;
+		font-size: 1rem;
 	}
 </style>

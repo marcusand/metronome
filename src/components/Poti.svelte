@@ -56,24 +56,19 @@
 </div>
 
 <style>
-	.container {
-		margin: 1.5rem;
-	}
-
 	.poti-container {
-		--size: 50px;
+		--size: 3rem;
 
 		width: var(--size);
 		height: var(--size);
 		margin-bottom: 0.25rem;
-
 		border: 2px solid var(--color-black);
 		border-radius: 50%;
-
 		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
 	}
 
 	.stroke-container {
