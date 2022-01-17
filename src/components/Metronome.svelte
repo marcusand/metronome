@@ -23,7 +23,7 @@
 			onChange={(value) => (bpm = value)}
 		/>
 	</RowContainer>
-	<RowContainer width="50%">
+	<RowContainer width="60%">
 		<div class="buttons">
 			<div class="poti">
 				<Poti title="count" stepsCount={9} initialStep={3} onChange={() => {}} />
@@ -38,7 +38,7 @@
 			</div>
 		</div>
 	</RowContainer>
-	<RowContainer width="50%">
+	<RowContainer width="60%">
 		<div class="volume-slider">
 			<Slider min={0} max={100} initialValue={100} onChange={() => {}} />
 			<span>volume</span>
@@ -71,7 +71,7 @@
 
 	.buttons {
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
 		align-items: flex-start;
 	}
 
