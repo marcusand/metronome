@@ -10,7 +10,7 @@
 	import TapButton from './TapButton.svelte';
 
 	const initialBpm = 80;
-	const initialSound = 1;
+	const initialSound = 0;
 	const initialTimeSignature = 4;
 
 	let metronome;
@@ -69,7 +69,12 @@
 				onPlay={() => (playing = true)}
 			/>
 			<div class="poti">
-				<Poti title="sound" stepsCount={3} onChange={(value) => (sound = value)} />
+				<Poti
+					title="sound"
+					stepsCount={3}
+					initialStep={initialSound}
+					onChange={(value) => (sound = value)}
+				/>
 			</div>
 		</div>
 	</RowContainer>
