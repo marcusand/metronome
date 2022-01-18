@@ -1,6 +1,6 @@
 <div class="container">
 	<span class="number"><slot /></span>
-	<span class="label">BPM</span>
+	<label class="label" for="bpm-slider">BPM</label>
 </div>
 
 <style>

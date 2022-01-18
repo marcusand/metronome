@@ -51,7 +51,13 @@
 		><TapButton {minBpm} {maxBpm} onTap={(value) => (bpm = value)} /></RowContainer
 	>
 	<RowContainer width="100%">
-		<Slider min={minBpm} max={maxBpm} value={bpm} onChange={(value) => (bpm = value)} />
+		<Slider
+			label="bpm"
+			min={minBpm}
+			max={maxBpm}
+			value={bpm}
+			onChange={(value) => (bpm = value)}
+		/>
 	</RowContainer>
 	<RowContainer width="60%">
 		<div class="buttons">
@@ -80,8 +86,14 @@
 	</RowContainer>
 	<RowContainer width="60%">
 		<div class="volume-slider">
-			<Slider min={0} max={100} value={100} onChange={(value) => (volume = value)} />
-			<span>volume</span>
+			<Slider
+				label="volume"
+				min={0}
+				max={100}
+				value={100}
+				onChange={(value) => (volume = value)}
+			/>
+			<label for="volume-slider">volume</label>
 		</div>
 	</RowContainer>
 </div>
@@ -125,7 +137,7 @@
 		flex-direction: column;
 	}
 
-	.volume-slider span {
+	.volume-slider label {
 		text-align: center;
 		color: var(--color-black);
 	}

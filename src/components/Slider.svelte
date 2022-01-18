@@ -3,14 +3,17 @@
 	export let max;
 	export let value;
 	export let onChange;
+	export let label;
 
 	$: onChange(value);
+
+	const sliderId = `${label}-slider`;
 </script>
 
 <div class="container">
-	<input type="button" class="button" value="-" on:click={() => (value -= 1)} />
-	<input type="range" {min} {max} class="slider" bind:value />
-	<input type="button" class="button" value="+" on:click={() => (value += 1)} />
+	<input class="button" type="button" value="-" on:click={() => (value -= 1)} />
+	<input id={sliderId} class="slider" type="range" {min} {max} bind:value />
+	<input class="button" type="button" value="+" on:click={() => (value += 1)} />
 </div>
 
 <style>
@@ -25,6 +28,10 @@
 		border: none;
 		color: var(--color-beta);
 		cursor: pointer;
+	}
+
+	.label {
+		/* display: none; */
 	}
 
 	.slider {
