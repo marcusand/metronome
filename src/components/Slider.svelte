@@ -30,10 +30,6 @@
 		cursor: pointer;
 	}
 
-	.label {
-		/* display: none; */
-	}
-
 	.slider {
 		-webkit-appearance: none;
 		width: 100%;
