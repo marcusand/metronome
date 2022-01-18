@@ -6,6 +6,12 @@
 
 <style>
 	.container {
-		margin: 1.2rem 0;
+		margin: 0.5rem 0;
+	}
+
+	@media only screen and (min-width: 768px) {
+		.container {
+			margin: 1.2rem 0;
+		}
 	}
 </style>
