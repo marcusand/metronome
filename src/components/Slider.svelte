@@ -38,7 +38,13 @@
 		cursor: pointer;
 
 		--thumb-color: var(--color-beta);
-		--thumb-size: 15px;
+		--thumb-size: 25px;
+	}
+
+	@media only screen and (min-width: 768px) {
+		.slider {
+			--thumb-size: 15px;
+		}
 	}
 
 	.slider::-webkit-slider-thumb {
