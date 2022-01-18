@@ -2,16 +2,16 @@
 	import Metronome from '../components/Metronome.svelte';
 </script>
 
-<div class="container">
-	<Metronome />
+<Metronome />
+
+<div class="menu">
+	<a href="/about">about</a>
+	<a href="/no-sound">no sound?</a>
 </div>
 
 <style>
-	.container {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	.menu {
+		position: absolute;
+		bottom: 5%;
 	}
 </style>

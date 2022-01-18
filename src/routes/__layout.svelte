@@ -17,8 +17,10 @@
 	<meta name="theme-color" content="#ffffff" />
 </svelte:head>
 
-<div class="main-container">
-	<slot />
+<div class="outer-container">
+	<div class="inner-container">
+		<slot />
+	</div>
 </div>
 
 <style>
@@ -36,20 +38,51 @@
 	:global(html),
 	:global(body),
 	:global(#svelte),
-	.main-container {
+	.outer-container {
 		width: 100%;
 		height: 100%;
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
 		font-family: Objectivity, sans-serif;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	:global(*) {
 		box-sizing: border-box;
 	}
 
-	.main-container {
+	:global(a) {
+		color: var(--color-beta);
+	}
+
+	.outer-container {
 		background-color: var(--color-alpha);
+	}
+
+	.inner-container {
+		width: 100%;
+		height: 100%;
+		color: var(--color-beta);
+		display: flex;
+		position: relative;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 0rem;
+		border: none;
+		user-select: none;
+	}
+
+	@media only screen and (min-width: 768px) {
+		.inner-container {
+			width: 450px;
+			height: 700px;
+			border: 2px solid var(--color-black);
+			border-radius: 20px;
+			padding: 1rem;
+		}
 	}
 </style>
