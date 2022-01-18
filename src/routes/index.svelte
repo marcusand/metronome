@@ -12,6 +12,7 @@
 <style>
 	.menu {
 		position: absolute;
-		bottom: 5%;
+		bottom: 2%;
+		font-size: 0.7rem;
 	}
 </style>

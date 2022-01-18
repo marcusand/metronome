@@ -13,6 +13,7 @@
 
 	.back {
 		position: absolute;
-		bottom: 5%;
+		font-size: 0.7rem;
+		bottom: 2%;
 	}
 </style>
