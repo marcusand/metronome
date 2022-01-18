@@ -105,6 +105,7 @@
 			width: 450px;
 			height: 700px;
 			border: 2px solid var(--color-black);
+			border-radius: 20px;
 			padding: 1rem;
 		}
 	}
