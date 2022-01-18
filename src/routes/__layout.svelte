@@ -1,6 +1,10 @@
 <svelte:head>
 	<title>metronome</title>
 	<meta name="description" content="A free online metronome" />
+	<meta
+		name="keywords"
+		content="metronome, free, online, web, music, rhythm, minimalistic"
+	/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
 	<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
