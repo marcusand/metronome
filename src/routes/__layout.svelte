@@ -10,7 +10,7 @@
 
 	:global(:root) {
 		--color-alpha: #b4b17c;
-		--color-beta: #7f519d;
+		--color-beta: #491280;
 		--color-black: #1f0539;
 	}
 
