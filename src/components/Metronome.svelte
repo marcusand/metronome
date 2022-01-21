@@ -25,7 +25,7 @@
 	});
 
 	onDestroy(() => {
-		metronome.destroy();
+		if (metronome) metronome.destroy();
 	});
 
 	$: {
