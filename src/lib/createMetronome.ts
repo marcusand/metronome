@@ -11,6 +11,7 @@ export type CreateMetronomeConfig = {
 export type Metronome = {
 	play: () => void;
 	pause: () => void;
+	destroy: () => void;
 	setBpm: (value: number) => void;
 	setVolume: (value: number) => void;
 	setSampleSet: (value: number) => void;
@@ -71,6 +72,10 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 		scheduler.stop();
 	};
 
+	const destroy = () => {
+		audioContext.close();
+	};
+
 	const setBpm = (value: number) => {
 		scheduler.setBpm(value);
 	};
@@ -92,6 +97,7 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 	return {
 		play,
 		pause,
+		destroy,
 		setBpm,
 		setSampleSet,
 		setTimeSignature,

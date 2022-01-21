@@ -1,6 +1,6 @@
 <script>
 	import { createMetronome } from '$lib/createMetronome';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	import BpmInfo from './BpmInfo.svelte';
 	import PlayButton from './PlayButton.svelte';
@@ -22,6 +22,10 @@
 		metronome = createMetronome({
 			samples: [['/audio/wood-low.mp3', '/audio/wood-high.mp3']]
 		});
+	});
+
+	onDestroy(() => {
+		metronome.destroy();
 	});
 
 	$: {
