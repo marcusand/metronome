@@ -38,6 +38,7 @@
 	:global(html) {
 		position: fixed;
 		height: 100%;
+		touch-action: manipulation;
 	}
 
 	:global(html),
