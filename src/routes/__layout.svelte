@@ -35,6 +35,11 @@
 		--color-black: #1f0539;
 	}
 
+	:global(html) {
+		position: fixed;
+		height: 100%;
+	}
+
 	:global(html),
 	:global(body),
 	:global(#svelte),
