@@ -32,8 +32,10 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
 		bpm: 80,
 		onTick: (count, when) => {
 			const beat = count % timeSignature;
-			const sample = beat === 0 ? 1 : 0;
-			playSample(sampleBuffers[sampleSet + sample], when);
+			const accent = beat === 0 ? 1 : 0;
+			const sample = sampleBuffers[sampleSet * 2 + accent];
+
+			playSample(sample, when);
 		}
 	});
 

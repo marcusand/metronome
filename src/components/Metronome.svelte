@@ -20,7 +20,11 @@
 
 	onMount(() => {
 		metronome = createMetronome({
-			samples: [['/audio/wood-low.mp3', '/audio/wood-high.mp3']]
+			samples: [
+				['/audio/wood.mp3', '/audio/wood-accent.mp3'],
+				['/audio/hihat.mp3', '/audio/hihat-accent.mp3'],
+				['/audio/cowbell.mp3', '/audio/cowbell-accent.mp3']
+			]
 		});
 	});
 
