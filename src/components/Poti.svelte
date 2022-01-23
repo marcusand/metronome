@@ -11,31 +11,49 @@
 		.fill(0)
 		.map((_, index) => Math.round(minAngle + index * stepAngle));
 
+	const moveEvents = {
+		touch: 'touchmove',
+		other: 'pointermove'
+	};
+
+	const endEvents = {
+		touch: 'touchend',
+		other: 'pointerup'
+	};
+
+	let isTouch = false;
 	let currentStep = initialStep;
 	let mouseDownY;
 	let mouseDownAngle;
 
+	const moveEvent = () => (isTouch ? moveEvents.touch : moveEvents.other);
+	const endEvent = () => (isTouch ? endEvents.touch : endEvents.other);
+
 	const handleMouseDown = (event) => {
+		const { pointerType } = event;
+
+		isTouch = pointerType === 'touch';
+
 		mouseDownY = event.clientY;
 		mouseDownAngle = stepAngles[currentStep];
 
-		document.addEventListener('pointermove', handleMouseMove);
-		document.addEventListener('pointerup', handleMouseUp);
+		document.addEventListener(moveEvent(), handleMouseMove);
+		document.addEventListener(endEvent(), handleMouseUp);
 	};
 
 	const handleMouseUp = () => {
-		document.removeEventListener('pointerup', handleMouseUp);
-		document.removeEventListener('pointermove', handleMouseMove);
+		document.removeEventListener(moveEvent(), handleMouseMove);
+		document.removeEventListener(endEvent(), handleMouseUp);
 	};
 
 	const handleMouseMove = (e) => {
-		const dy = mouseDownY - e.clientY;
+		const dy = mouseDownY - e.pageY;
 
-		let newAngle = mouseDownAngle + dy * 2;
+		let newAngle = mouseDownAngle + dy * 5;
 		newAngle = Math.max(minAngle, Math.min(maxAngle, newAngle));
 
 		const nearestStep = stepAngles.findIndex((angle) => {
-			return newAngle - angle < stepAngle / 2;
+			return newAngle - angle < stepAngle;
 		});
 
 		if (nearestStep !== currentStep) {
@@ -69,6 +87,10 @@
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
+
+		-webkit-touch-callout: none !important;
+		-webkit-user-select: none;
+		user-select: none;
 	}
 
 	.stroke-container {
