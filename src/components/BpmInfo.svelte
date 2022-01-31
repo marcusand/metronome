@@ -15,6 +15,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		position: relative;
 	}
 
 	.number {
@@ -23,5 +24,6 @@
 
 	.label {
 		font-size: 1rem;
+		margin-top: -0.5rem;
 	}
 </style>

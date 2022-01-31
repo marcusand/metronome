@@ -24,11 +24,6 @@
 </div>
 
 <style>
-	@font-face {
-		font-family: 'Objectivity';
-		src: url('/fonts/objectivity.medium.otf') format('opentype');
-	}
-
 	:global(:root) {
 		--color-alpha: #b4b17c;
 		--color-beta: #491280;
@@ -50,7 +45,7 @@
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
-		font-family: Objectivity, sans-serif;
+		font-family: Futura, Verdana, sans-serif;
 		display: flex;
 		justify-content: center;
 		align-items: center;
