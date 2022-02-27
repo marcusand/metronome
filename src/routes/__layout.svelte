@@ -27,7 +27,7 @@
 	:global(:root) {
 		--color-alpha: #b4b17c;
 		--color-beta: #491280;
-		--color-black: #1f0539;
+		--color-black: #0e031a;
 	}
 
 	:global(html) {
