@@ -18,6 +18,19 @@
 	let minBpm = 40;
 	let maxBpm = 220;
 
+	const toggleMetronome = (event) => {
+		const { code } = event;
+
+		if (code === 'Space') {
+			playing = !playing;
+		}
+	};
+
+	onMount(() => {
+		document.addEventListener('keydown', toggleMetronome);
+		return () => document.removeEventListener('keydown', toggleMetronome);
+	});
+
 	onMount(() => {
 		metronome = createMetronome({
 			samples: [
