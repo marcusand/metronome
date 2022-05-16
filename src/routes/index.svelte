@@ -1,35 +1,35 @@
 <script>
-	import NoSleep from 'nosleep.js';
-	import { onDestroy, onMount } from 'svelte';
-	import Metronome from '../components/Metronome.svelte';
+  import NoSleep from 'nosleep.js';
+  import { onDestroy, onMount } from 'svelte';
+  import Metronome from '../components/Metronome.svelte';
 
-	let noSleep;
+  let noSleep;
 
-	const enableNoSleep = () => {
-		document.removeEventListener('click', enableNoSleep);
-		noSleep.enable();
-	};
+  const enableNoSleep = () => {
+    document.removeEventListener('click', enableNoSleep);
+    noSleep.enable();
+  };
 
-	onMount(() => {
-		noSleep = new NoSleep();
-		document.addEventListener('click', enableNoSleep);
-	});
+  onMount(() => {
+    noSleep = new NoSleep();
+    document.addEventListener('click', enableNoSleep);
+  });
 
-	onDestroy(() => {
-		if (noSleep) noSleep.disable();
-	});
+  onDestroy(() => {
+    if (noSleep) noSleep.disable();
+  });
 </script>
 
 <Metronome />
 
 <div class="menu">
-	<a href="/about">about</a>
+  <a href="/about">about</a>
 </div>
 
 <style>
-	.menu {
-		position: absolute;
-		bottom: 2%;
-		font-size: 0.7rem;
-	}
+  .menu {
+    position: absolute;
+    bottom: 2%;
+    font-size: 0.7rem;
+  }
 </style>

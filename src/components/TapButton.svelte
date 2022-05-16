@@ -1,37 +1,37 @@
 <script>
-	export let onTap;
-	export let minBpm;
-	export let maxBpm;
+  export let onTap;
+  export let minBpm;
+  export let maxBpm;
 
-	let flip = false;
-	let lastTap;
+  let flip = false;
+  let lastTap;
 
-	const tap = () => {
-		flip = !flip;
-		const currentTap = Date.now();
+  const tap = () => {
+    flip = !flip;
+    const currentTap = Date.now();
 
-		if (lastTap) {
-			const diff = (currentTap - lastTap) / 1000;
-			const bpm = Math.min(Math.round(60 / diff), maxBpm);
+    if (lastTap) {
+      const diff = (currentTap - lastTap) / 1000;
+      const bpm = Math.min(Math.round(60 / diff), maxBpm);
 
-			if (bpm >= minBpm) onTap(bpm);
-		}
+      if (bpm >= minBpm) onTap(bpm);
+    }
 
-		lastTap = currentTap;
-	};
+    lastTap = currentTap;
+  };
 </script>
 
 <div
-	class="container"
-	style="transform: {flip ? 'scale(-1, 1)' : 'scale(1,1)'};"
-	on:click={tap}
+  class="container"
+  style="transform: {flip ? 'scale(-1, 1)' : 'scale(1,1)'};"
+  on:click={tap}
 >
-	tap
+  tap
 </div>
 
 <style>
-	.container {
-		cursor: pointer;
-		font-size: 2rem;
-	}
+  .container {
+    cursor: pointer;
+    font-size: 2rem;
+  }
 </style>
