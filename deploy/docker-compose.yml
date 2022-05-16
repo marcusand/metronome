@@ -1,0 +1,16 @@
+version: '3'
+services:
+  website:
+    image: flashspys/nginx-static
+    container_name: lys
+    networks:
+      - traefik
+    ports:
+      - 8083:80
+    volumes:
+      - ./build:/static
+
+networks:
+  traefik:
+    name: traefik
+    external: true
