@@ -23,16 +23,19 @@ export const store = writable(defaultState);
 const tryLoadingStateFromLocalStorage = (): void => {
   try {
     const localState = localStorage.getItem(localStorageItemName);
-    const localStateObject = JSON.parse(localState);
 
-    /**
-     * we don't want autoplay so always set playing to false
-     *  no matter what the last state was
-     */
-    store.set({
-      ...localStateObject,
-      playing: false
-    });
+    if (localState) {
+      const localStateObject = JSON.parse(localState);
+
+      /**
+       * we don't want autoplay so always set playing to false
+       *  no matter what the last state was
+       */
+      store.set({
+        ...localStateObject,
+        playing: false
+      });
+    }
 
     updateLocalStorageOnStateChange();
   } catch (error) {
