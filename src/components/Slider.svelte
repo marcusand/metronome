@@ -2,10 +2,7 @@
   export let min;
   export let max;
   export let value;
-  export let onChange;
   export let label;
-
-  $: onChange(value);
 
   const sliderId = `${label}-slider`;
 </script>

@@ -1,4 +1,5 @@
 <script>
+  import { store, actions } from '../store';
   import { createMetronome } from '$lib/createMetronome';
   import { onDestroy, onMount } from 'svelte';
 
@@ -10,11 +11,6 @@
   import TapButton from './TapButton.svelte';
 
   let metronome;
-  let playing = false;
-  let bpm = 80;
-  let sound = 0;
-  let timeSignature = 4;
-  let volume = 100;
   let minBpm = 40;
   let maxBpm = 220;
 
@@ -22,7 +18,7 @@
     const { code } = event;
 
     if (code === 'Space') {
-      playing = !playing;
+      actions.setPlaying(!$store.playing);
     }
   };
 
@@ -39,80 +35,48 @@
         ['/audio/cowbell.mp3', '/audio/cowbell-accent.mp3']
       ]
     });
+
+    actions.tryLoadingStateFromLocalStorage();
   });
 
   onDestroy(() => {
-    if (metronome) metronome.destroy();
+    metronome?.destroy();
   });
 
   $: {
-    if (metronome) metronome.setBpm(bpm);
-  }
-
-  $: {
-    if (metronome) playing ? metronome.play() : metronome.pause();
-  }
-
-  $: {
-    if (metronome) metronome.setTimeSignature(timeSignature);
-  }
-
-  $: {
-    if (metronome) metronome.setSampleSet(sound);
-  }
-
-  $: {
-    if (metronome) metronome.setVolume(volume / 100);
+    if (metronome) {
+      metronome.setBpm($store.bpm);
+      metronome.setTimeSignature($store.timeSignature + 1);
+      metronome.setSampleSet($store.sampleSet);
+      metronome.setVolume($store.volume / 100);
+      $store.playing ? metronome.play() : metronome.pause();
+    }
   }
 </script>
 
-<RowContainer><BpmInfo>{bpm}</BpmInfo></RowContainer>
-<RowContainer
-  ><TapButton {minBpm} {maxBpm} onTap={(value) => (bpm = value)} /></RowContainer
->
+<RowContainer><BpmInfo>{$store.bpm}</BpmInfo></RowContainer>
+<RowContainer><TapButton {minBpm} {maxBpm} onTap={actions.setBpm} /></RowContainer>
 <RowContainer width="100%">
-  <Slider
-    label="bpm"
-    min={minBpm}
-    max={maxBpm}
-    value={bpm}
-    onChange={(value) => (bpm = value)}
-  />
+  <Slider label="bpm" min={minBpm} max={maxBpm} bind:value={$store.bpm} />
 </RowContainer>
 <RowContainer width="60%">
   <div class="buttons">
     <div class="poti">
-      <Poti
-        title="time"
-        stepsCount={12}
-        initialStep={timeSignature - 1}
-        onChange={(value) => (timeSignature = value + 1)}
-      />
+      <Poti title="time" stepsCount={12} bind:step={$store.timeSignature} />
     </div>
     <PlayButton
-      {playing}
-      onPause={() => (playing = false)}
-      onPlay={() => (playing = true)}
+      playing={$store.playing}
+      onPause={() => actions.setPlaying(false)}
+      onPlay={() => actions.setPlaying(true)}
     />
     <div class="poti">
-      <Poti
-        title="sound"
-        stepsCount={3}
-        initialStep={sound}
-        onChange={(value) => (sound = value)}
-      />
+      <Poti title="sound" stepsCount={3} bind:step={$store.sampleSet} />
     </div>
   </div>
 </RowContainer>
 <RowContainer width="60%">
   <div class="volume-slider">
-    <Slider
-      label="volume"
-      min={0}
-      max={100}
-      value={100}
-      onChange={(value) => (volume = value)}
-    />
+    <Slider label="volume" min={0} max={100} bind:value={$store.volume} />
     <label for="volume-slider">volume</label>
   </div>
 </RowContainer>

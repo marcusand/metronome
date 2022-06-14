@@ -1,8 +1,7 @@
 <script>
   export let title = '';
   export let stepsCount = 4;
-  export let initialStep = 0;
-  export let onChange;
+  export let step = 1;
 
   const minAngle = -130;
   const maxAngle = 130;
@@ -22,7 +21,6 @@
   };
 
   let isTouch = false;
-  let currentStep = initialStep;
   let mouseDownY;
   let mouseDownAngle;
 
@@ -35,7 +33,7 @@
     isTouch = pointerType === 'touch';
 
     mouseDownY = event.clientY;
-    mouseDownAngle = stepAngles[currentStep];
+    mouseDownAngle = stepAngles[step];
 
     document.addEventListener(moveEvent(), handleMouseMove);
     document.addEventListener(endEvent(), handleMouseUp);
@@ -56,19 +54,18 @@
       return newAngle - angle < stepAngle;
     });
 
-    if (nearestStep !== currentStep) {
-      currentStep = nearestStep;
-      if (onChange) onChange(currentStep);
+    if (nearestStep !== step) {
+      step = nearestStep;
     }
   };
 </script>
 
 <div class="container">
   <div class="poti-container" on:pointerdown={handleMouseDown}>
-    <div class="stroke-container" style="transform: rotate({stepAngles[currentStep]}deg)">
+    <div class="stroke-container" style="transform: rotate({stepAngles[step]}deg)">
       <div class="stroke" />
     </div>
-    <div>{currentStep + 1}</div>
+    <div>{step + 1}</div>
   </div>
   <div class="title">{title}</div>
 </div>
