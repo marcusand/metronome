@@ -1,6 +1,7 @@
 <script lang="ts">
-  import NoSleep from 'nosleep.js';
   import { onDestroy, onMount } from 'svelte';
+  import NoSleep from 'nosleep.js';
+  import Footer from '../components/Footer.svelte';
   import Metronome from '../components/Metronome.svelte';
 
   let noSleep = new NoSleep();
@@ -20,15 +21,6 @@
 </script>
 
 <Metronome />
-
-<div class="menu">
+<Footer>
   <a href="/about">about</a>
-</div>
-
-<style>
-  .menu {
-    position: absolute;
-    bottom: 2%;
-    font-size: 0.7rem;
-  }
-</style>
+</Footer>
