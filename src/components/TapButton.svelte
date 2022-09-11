@@ -1,10 +1,10 @@
-<script>
-  export let onTap;
-  export let minBpm;
-  export let maxBpm;
+<script lang="ts">
+  export let onTap: (value: number) => void;
+  export let minBpm: number;
+  export let maxBpm: number;
 
   let flip = false;
-  let lastTap;
+  let lastTap: number;
 
   const tap = () => {
     flip = !flip;
@@ -23,7 +23,7 @@
 
 <div
   class="container"
-  style="transform: {flip ? 'scale(-1, 1)' : 'scale(1,1)'};"
+  style="transform: {flip ? 'scale(-1,1)' : 'scale(1,1)'};"
   on:click={tap}
 >
   tap

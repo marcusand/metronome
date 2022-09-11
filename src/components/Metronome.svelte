@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { store, actions } from '../store';
 
   import BpmInfo from './BpmInfo.svelte';

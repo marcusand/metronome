@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import Play from '../assets/icons/play.svelte';
   import Pause from '../assets/icons/pause.svelte';
 
-  export let playing;
-  export let onPlay;
-  export let onPause;
+  export let playing: boolean;
+  export let onPlay: () => void;
+  export let onPause: () => void;
 
   const handleClick = () => {
     playing ? onPause() : onPlay();

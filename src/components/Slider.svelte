@@ -1,8 +1,8 @@
-<script>
-  export let min;
-  export let max;
-  export let value;
-  export let label;
+<script lang="ts">
+  export let min: number;
+  export let max: number;
+  export let value: number;
+  export let label = '';
 
   const sliderId = `${label}-slider`;
 </script>
