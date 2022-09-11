@@ -31,10 +31,11 @@ export const store = writable(localStorageState ?? defaultState);
 store.subscribe((state: MetronomeState) => {
   if (metronome) {
     metronome.setBpm(state.bpm);
-    metronome.setTimeSignature(state.timeSignature + 1);
+    metronome.setTimeSignature(state.timeSignature);
     metronome.setSampleSet(state.sampleSet);
     metronome.setVolume(state.volume);
     state.playing ? metronome.play() : metronome.pause();
+
     saveToLocalStorage(state, localStorageItemName);
   }
 });
