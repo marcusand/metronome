@@ -2,7 +2,7 @@
   import { store, actions } from '../store';
   import { onMount } from 'svelte';
 
-  const toggleMetronome = (event) => {
+  const toggleMetronome = (event: KeyboardEvent) => {
     const { code } = event;
 
     if (code === 'Space') {

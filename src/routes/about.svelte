@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Subpage from '../components/Subpage.svelte';
 </script>
 

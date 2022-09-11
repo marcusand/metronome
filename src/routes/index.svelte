@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   import NoSleep from 'nosleep.js';
   import { onDestroy, onMount } from 'svelte';
   import Metronome from '../components/Metronome.svelte';
 
-  let noSleep;
+  let noSleep = new NoSleep();
 
   const enableNoSleep = () => {
     document.removeEventListener('click', enableNoSleep);
@@ -11,7 +11,6 @@
   };
 
   onMount(() => {
-    noSleep = new NoSleep();
     document.addEventListener('click', enableNoSleep);
   });
 
