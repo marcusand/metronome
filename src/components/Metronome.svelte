@@ -1,7 +1,5 @@
 <script>
   import { store, actions } from '../store';
-  import { createMetronome } from '$lib/createMetronome';
-  import { onDestroy, onMount } from 'svelte';
 
   import BpmInfo from './BpmInfo.svelte';
   import PlayButton from './PlayButton.svelte';
@@ -10,48 +8,8 @@
   import Slider from './Slider.svelte';
   import TapButton from './TapButton.svelte';
 
-  let metronome;
   let minBpm = 40;
   let maxBpm = 220;
-
-  const toggleMetronome = (event) => {
-    const { code } = event;
-
-    if (code === 'Space') {
-      actions.setPlaying(!$store.playing);
-    }
-  };
-
-  onMount(() => {
-    document.addEventListener('keydown', toggleMetronome);
-    return () => document.removeEventListener('keydown', toggleMetronome);
-  });
-
-  onMount(() => {
-    metronome = createMetronome({
-      samples: [
-        ['/audio/wood.mp3', '/audio/wood-accent.mp3'],
-        ['/audio/hihat.mp3', '/audio/hihat-accent.mp3'],
-        ['/audio/cowbell.mp3', '/audio/cowbell-accent.mp3']
-      ]
-    });
-
-    actions.tryLoadingStateFromLocalStorage();
-  });
-
-  onDestroy(() => {
-    metronome?.destroy();
-  });
-
-  $: {
-    if (metronome) {
-      metronome.setBpm($store.bpm);
-      metronome.setTimeSignature($store.timeSignature + 1);
-      metronome.setSampleSet($store.sampleSet);
-      metronome.setVolume($store.volume / 100);
-      $store.playing ? metronome.play() : metronome.pause();
-    }
-  }
 </script>
 
 <RowContainer><BpmInfo>{$store.bpm}</BpmInfo></RowContainer>

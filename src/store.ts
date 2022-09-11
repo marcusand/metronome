@@ -1,6 +1,10 @@
+import { createMetronome, type Metronome } from '$lib/createMetronome';
 import { writable } from 'svelte/store';
+import { loadFromLocalStorage, saveToLocalStorage } from './localStorage';
 
 const localStorageItemName = 'metronome-state';
+
+let metronome: Metronome | undefined;
 
 interface MetronomeState {
   playing: boolean;
@@ -8,6 +12,7 @@ interface MetronomeState {
   sampleSet: number;
   timeSignature: number;
   volume: number;
+  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 
 const defaultState: MetronomeState = {
@@ -15,38 +20,54 @@ const defaultState: MetronomeState = {
   bpm: 80,
   sampleSet: 0,
   timeSignature: 4,
-  volume: 100
+  volume: 100,
+  loading: 'idle'
 };
 
-export const store = writable(defaultState);
+const localStorageState = loadFromLocalStorage<MetronomeState>(localStorageItemName);
 
-const tryLoadingStateFromLocalStorage = (): void => {
+export const store = writable(localStorageState ?? defaultState);
+
+store.subscribe((state: MetronomeState) => {
+  if (metronome) {
+    metronome.setBpm(state.bpm);
+    metronome.setTimeSignature(state.timeSignature + 1);
+    metronome.setSampleSet(state.sampleSet);
+    metronome.setVolume(state.volume);
+    state.playing ? metronome.play() : metronome.pause();
+    saveToLocalStorage(state, localStorageItemName);
+  }
+});
+
+const initializeMetronome = async (): Promise<void> => {
+  store.update((state) => ({ ...state, loading: 'pending' }));
+
   try {
-    const localState = localStorage.getItem(localStorageItemName);
+    metronome = createMetronome({
+      samples: [
+        ['/audio/wood.mp3', '/audio/wood-accent.mp3'],
+        ['/audio/hihat.mp3', '/audio/hihat-accent.mp3'],
+        ['/audio/cowbell.mp3', '/audio/cowbell-accent.mp3']
+      ]
+    });
 
-    if (localState) {
-      const localStateObject = JSON.parse(localState);
+    await metronome.loadSamples();
 
-      /**
-       * we don't want autoplay so always set playing to false
-       *  no matter what the last state was
-       */
-      store.set({
-        ...localStateObject,
-        playing: false
-      });
-    }
-
-    updateLocalStorageOnStateChange();
+    store.update((state) => ({ ...state, playing: false, loading: 'succeeded' }));
   } catch (error) {
-    console.warn('Loading from local storage was not successful: ', error);
+    console.warn(error);
+
+    store.update((state) => ({ ...state, loading: 'failed' }));
   }
 };
 
-const updateLocalStorageOnStateChange = () => {
-  store.subscribe((value) => {
-    localStorage.setItem(localStorageItemName, JSON.stringify(value));
-  });
+const destroyMetronome = (): void => {
+  if (metronome) {
+    metronome.destroy();
+    metronome === undefined;
+  }
+
+  store.update((state) => ({ ...state, loading: 'idle' }));
 };
 
 const setVolume = (value: number): void => {
@@ -79,10 +100,11 @@ const setPlaying = (value: boolean): void => {
 };
 
 export const actions = {
+  initializeMetronome,
+  destroyMetronome,
   setVolume,
   setSampleSet,
   setTimeSignature,
   setBpm,
-  setPlaying,
-  tryLoadingStateFromLocalStorage
+  setPlaying
 };

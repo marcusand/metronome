@@ -1,3 +1,26 @@
+<script lang="ts">
+  import { store, actions } from '../store';
+  import { onMount } from 'svelte';
+
+  const toggleMetronome = (event) => {
+    const { code } = event;
+
+    if (code === 'Space') {
+      actions.setPlaying(!$store.playing);
+    }
+  };
+
+  onMount(() => {
+    actions.initializeMetronome();
+    document.addEventListener('keydown', toggleMetronome);
+
+    return () => {
+      actions.destroyMetronome();
+      document.removeEventListener('keydown', toggleMetronome);
+    };
+  });
+</script>
+
 <svelte:head>
   <title>metronome</title>
   <meta name="description" content="A free online metronome" />
@@ -19,7 +42,15 @@
 
 <div class="outer-container">
   <div class="inner-container">
-    <slot />
+    {#if $store.loading === 'pending'}
+      <span>Loading...</span>
+    {/if}
+    {#if $store.loading === 'failed'}
+      <span>Error loading samples :/</span>
+    {/if}
+    {#if $store.loading === 'succeeded'}
+      <slot />
+    {/if}
   </div>
 </div>
 

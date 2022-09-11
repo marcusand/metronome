@@ -16,13 +16,14 @@ export type Metronome = {
   setVolume: (value: number) => void;
   setSampleSet: (value: number) => void;
   setTimeSignature: (value: number) => void;
+  loadSamples: () => Promise<void>;
 };
 
 export type CreateMetronome = (config: CreateMetronomeConfig) => Metronome;
 
 export const createMetronome: CreateMetronome = ({ samples }) => {
   let sampleSet = 0;
-  let timeSignature = 4;
+  let timeSignature = 3;
   let samplesLoaded = false;
   let sampleBuffers: AudioBuffer[];
   const audioContext: AudioContext = new window.AudioContext();
@@ -31,26 +32,23 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
     audioContext,
     bpm: 80,
     onTick: (count, when) => {
-      const beat = count % timeSignature;
+      const beat = count % (timeSignature + 1);
       const accent = beat === 0 ? 1 : 0;
       const sample = sampleBuffers[sampleSet * 2 + accent];
 
       playSample(sample, when);
-    }
+    },
   });
 
   const loadSamples = async () => {
     const arrayBuffers = await Promise.all(
       samples
-        .map(([sample1, sample2]) => [
-          fetchAsArrayBuffer(sample1),
-          fetchAsArrayBuffer(sample2)
-        ])
-        .flat()
+        .map(([sample1, sample2]) => [fetchAsArrayBuffer(sample1), fetchAsArrayBuffer(sample2)])
+        .flat(),
     );
 
     const audioBuffers = await Promise.all(
-      arrayBuffers.map((buffer) => decodeAudioBuffer(audioContext, buffer))
+      arrayBuffers.map((buffer) => decodeAudioBuffer(audioContext, buffer)),
     );
 
     sampleBuffers = audioBuffers;
@@ -91,10 +89,8 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
   };
 
   const setVolume = (value: number) => {
-    gainNode.gain.value = value;
+    gainNode.gain.value = value / 100;
   };
-
-  loadSamples();
 
   return {
     play,
@@ -103,6 +99,7 @@ export const createMetronome: CreateMetronome = ({ samples }) => {
     setBpm,
     setSampleSet,
     setTimeSignature,
-    setVolume
+    setVolume,
+    loadSamples,
   };
 };
