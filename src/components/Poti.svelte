@@ -1,68 +1,62 @@
-<script>
+<script lang="ts">
   export let title = '';
   export let stepsCount = 4;
   export let step = 1;
 
   const minAngle = -130;
   const maxAngle = 130;
-  const stepAngle = (Math.abs(minAngle) + maxAngle) / (stepsCount - 1);
-  const stepAngles = Array(stepsCount)
-    .fill(0)
-    .map((_, index) => Math.round(minAngle + index * stepAngle));
+  const angleOfOneStep = (Math.abs(minAngle) + maxAngle) / (stepsCount - 1);
 
-  const moveEvents = {
-    touch: 'touchmove',
-    other: 'pointermove'
-  };
+  let mouseDownY: number;
+  let mouseDownStep: number;
 
-  const endEvents = {
-    touch: 'touchend',
-    other: 'pointerup'
-  };
-
-  let isTouch = false;
-  let mouseDownY;
-  let mouseDownAngle;
-
-  const moveEvent = () => (isTouch ? moveEvents.touch : moveEvents.other);
-  const endEvent = () => (isTouch ? endEvents.touch : endEvents.other);
-
-  const handleMouseDown = (event) => {
-    const { pointerType } = event;
-
-    isTouch = pointerType === 'touch';
-
+  const handlePointerDown = (event: PointerEvent) => {
     mouseDownY = event.clientY;
-    mouseDownAngle = stepAngles[step];
+    mouseDownStep = step;
 
-    document.addEventListener(moveEvent(), handleMouseMove);
-    document.addEventListener(endEvent(), handleMouseUp);
-  };
-
-  const handleMouseUp = () => {
-    document.removeEventListener(moveEvent(), handleMouseMove);
-    document.removeEventListener(endEvent(), handleMouseUp);
-  };
-
-  const handleMouseMove = (e) => {
-    const dy = mouseDownY - e.pageY;
-
-    let newAngle = mouseDownAngle + dy * 5;
-    newAngle = Math.max(minAngle, Math.min(maxAngle, newAngle));
-
-    const nearestStep = stepAngles.findIndex((angle) => {
-      return newAngle - angle < stepAngle;
-    });
-
-    if (nearestStep !== step) {
-      step = nearestStep;
+    if (event instanceof TouchEvent) {
+      document.addEventListener('touchmove', handlePointerMove);
+      document.addEventListener('touchend', handlePointerUp);
+    } else {
+      document.addEventListener('pointermove', handlePointerMove);
+      document.addEventListener('pointerup', handlePointerUp);
     }
+  };
+
+  const handlePointerUp = (event: TouchEvent | PointerEvent) => {
+    if (event instanceof TouchEvent) {
+      document.removeEventListener('touchmove', handlePointerMove);
+      document.removeEventListener('touchend', handlePointerUp);
+    } else {
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerup', handlePointerUp);
+    }
+  };
+
+  const handlePointerMove = (event: TouchEvent | PointerEvent) => {
+    let pageY;
+
+    if (event instanceof TouchEvent) {
+      pageY = event.targetTouches[0].pageY;
+    } else {
+      pageY = event.pageY;
+    }
+
+    const dy = mouseDownY - pageY;
+    const dStep = Math.round(dy * (stepsCount * 0.01));
+    const newStep = mouseDownStep + dStep;
+    const newStepCapped = Math.min(Math.max(newStep, 0), stepsCount - 1);
+
+    step = newStepCapped;
   };
 </script>
 
 <div class="container">
-  <div class="poti-container" on:pointerdown={handleMouseDown}>
-    <div class="stroke-container" style="transform: rotate({stepAngles[step]}deg)">
+  <div class="poti-container" on:pointerdown={handlePointerDown}>
+    <div
+      class="stroke-container"
+      style="transform: rotate({minAngle + step * angleOfOneStep}deg)"
+    >
       <div class="stroke" />
     </div>
     <div>{step + 1}</div>
