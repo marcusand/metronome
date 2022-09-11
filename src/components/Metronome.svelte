@@ -4,7 +4,6 @@
   import BpmInfo from './BpmInfo.svelte';
   import PlayButton from './PlayButton.svelte';
   import Poti from './Poti.svelte';
-  import RowContainer from './RowContainer.svelte';
   import Slider from './Slider.svelte';
   import TapButton from './TapButton.svelte';
 
@@ -12,12 +11,10 @@
   let maxBpm = 220;
 </script>
 
-<RowContainer><BpmInfo>{$store.bpm}</BpmInfo></RowContainer>
-<RowContainer><TapButton {minBpm} {maxBpm} onTap={actions.setBpm} /></RowContainer>
-<RowContainer width="100%">
+<div class="metronome">
+  <BpmInfo>{$store.bpm}</BpmInfo>
+  <TapButton {minBpm} {maxBpm} onTap={actions.setBpm} />
   <Slider label="bpm" min={minBpm} max={maxBpm} bind:value={$store.bpm} />
-</RowContainer>
-<RowContainer width="60%">
   <div class="buttons">
     <div class="poti">
       <Poti title="time" stepsCount={12} bind:step={$store.timeSignature} />
@@ -31,16 +28,23 @@
       <Poti title="sound" stepsCount={3} bind:step={$store.sampleSet} />
     </div>
   </div>
-</RowContainer>
-<RowContainer width="60%">
   <div class="volume-slider">
     <Slider label="volume" min={0} max={100} bind:value={$store.volume} />
     <label for="volume-slider">volume</label>
   </div>
-</RowContainer>
+</div>
 
 <style>
+  .metronome {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 2.5rem 0;
+  }
+
   .buttons {
+    width: 60%;
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
@@ -51,6 +55,7 @@
   }
 
   .volume-slider {
+    width: 60%;
     display: flex;
     flex-direction: column;
   }
