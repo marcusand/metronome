@@ -14,35 +14,35 @@
     mouseDownY = event.clientY;
     mouseDownStep = step;
 
-    if (event instanceof TouchEvent) {
-      document.addEventListener('touchmove', handlePointerMove);
-      document.addEventListener('touchend', handlePointerUp);
+    if (event.pointerType === 'touch') {
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', handleTouchEnd);
     } else {
       document.addEventListener('pointermove', handlePointerMove);
       document.addEventListener('pointerup', handlePointerUp);
     }
   };
 
-  const handlePointerUp = (event: TouchEvent | PointerEvent) => {
-    if (event instanceof TouchEvent) {
-      document.removeEventListener('touchmove', handlePointerMove);
-      document.removeEventListener('touchend', handlePointerUp);
-    } else {
-      document.removeEventListener('pointermove', handlePointerMove);
-      document.removeEventListener('pointerup', handlePointerUp);
-    }
+  const handleTouchEnd = (event: TouchEvent) => {
+    document.removeEventListener('touchmove', handleTouchMove);
+    document.removeEventListener('touchend', handleTouchEnd);
   };
 
-  const handlePointerMove = (event: TouchEvent | PointerEvent) => {
-    let pageY;
+  const handlePointerUp = (event: PointerEvent) => {
+    document.removeEventListener('pointermove', handlePointerMove);
+    document.removeEventListener('pointerup', handlePointerUp);
+  };
 
-    if (event instanceof TouchEvent) {
-      pageY = event.targetTouches[0].pageY;
-    } else {
-      pageY = event.pageY;
-    }
+  const handleTouchMove = (event: TouchEvent) => {
+    handleMove(event.targetTouches[0].pageY);
+  };
 
-    const dy = mouseDownY - pageY;
+  const handlePointerMove = (event: PointerEvent) => {
+    handleMove(event.pageY);
+  };
+
+  const handleMove = (yPosition: number) => {
+    const dy = mouseDownY - yPosition;
     const dStep = Math.round(dy * (stepsCount * 0.01));
     const newStep = mouseDownStep + dStep;
     const newStepCapped = Math.min(Math.max(newStep, 0), stepsCount - 1);
