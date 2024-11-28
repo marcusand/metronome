@@ -9,6 +9,7 @@ services:
       - 8083:80
     volumes:
       - ./build:/static
+    restart: unless-stopped
 
 networks:
   traefik:
